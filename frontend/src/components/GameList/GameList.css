@@ -1,0 +1,47 @@
+.frameGL {
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    
+}
+
+.frameGL li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 20px
+}
+
+.frameGL ul {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+}
+.frameGL input {
+    width: 150px;
+}
+
+.rech {
+    display: flex;
+    flex-direction: row;
+}
+
+.rech p {
+    margin: 0;
+}
+
+.rech input {
+    margin: 0 5px 0 60px;
+}
+
+@media (max-width: 760px) {
+    .frameGL li {
+    margin: 7px
+    }
+}
