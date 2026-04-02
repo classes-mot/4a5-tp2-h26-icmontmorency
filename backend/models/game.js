@@ -4,7 +4,7 @@ const gameSchema = new mongoose.Schema({
     name: {type: String, required: true},
     categorie: {type: String, required: true},
     duree: {type: String, required: true},
-    image: {type: Object, required: true},
+    image: {type: String, required: true},
     nbJoueurs: {type: Number, required: true}
 })
 

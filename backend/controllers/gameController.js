@@ -1,4 +1,4 @@
-import HttpError from '../util/http-error.js'; // Assurez-vous que le chemin d'accès est correct
+import HttpError from '../util/httpError.js'; // Assurez-vous que le chemin d'accès est correct
 import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import { v4 as uuid } from 'uuid'; // Assurez-vous d'avoir la bibliothèque 'uuid'.
@@ -17,24 +17,22 @@ const getGames = async (req, res, next) => {
 };
 
 const getGamesById = async (req, res, next) => {
-  const taskId = req.params.tid; // { tid: 't1' }
+  const gameId = req.params.tid; // { tid: 't1' }
 
 
   let game;
   try {
     
-    game = await Task.findById(taskId);
+    game = await Game.findById(gameId);
   } catch(err) {
     console.log("Ajout pas yippy :(", err)
     return next(new HttpError(":(((((((", 500));
   }
   //si la tâche n'est pas trouvée... erreur 404
   if (!game) {
-    /*const error = new Error('Tâche non trouvée');
+    const error = new Error('Tâche non trouvée');
       error.code = 404; // Spécifie le code de statut HTTP pour l'erreur
       return next(error); // Déclenche une erreur personnalisée
-      --boni:*/
-    return next(new HttpError('Tâche non trouvée', 404));
   }
 
   res.json({ game: game.toObject({getters: true})});
@@ -46,7 +44,7 @@ const createGame = async (req, res, next) => {
   console.log('createGame---------------');
   console.log(req);
   const { name, categorie, duree, image, nbJoueurs } = req.body;
-  const createdGame = new Task({
+  const createdGame = new Game({
     name,
     categorie,
     duree,
@@ -61,7 +59,7 @@ const createGame = async (req, res, next) => {
     return next(new HttpError(":(((((((", 500));
   }
   //201 standard pour créé avec succès
-  res.status(201).json({ task: createdTask });
+  res.status(201).json({ game: createdGame });
 };
 //PUT
 const updateGame = async (req, res, next) => {
@@ -76,7 +74,7 @@ const updateGame = async (req, res, next) => {
     updatedGame.duree = duree;
     updatedGame.image = image;
     updatedGame.nbJoueurs = nbJoueurs;
-    await updateGame.save();
+    await updatedGame.save();
   } catch {
     console.log("flemme de fair une full ahh erreur")
   }
@@ -95,15 +93,17 @@ const deleteGame = async (req, res, next) => {
       return res.status(404).json({message: ":(((((( delete"})
     }
   } catch {
-    console.log("flemme de fair une full ahh erreur")
+    const error = new Error('Tâche non trouvée');
+      error.code = 404; // Spécifie le code de statut HTTP pour l'erreur
+      return next(error); // Déclenche une erreur personnalisée
   }
 
 };
 
 export default {
-  getTasks: getGames,
-  getTasksById: getGamesById,
-  createTask: createGame,
-  updateTask: updateGame,
-  deleteTask: deleteGame,
+  getGames: getGames,
+  getGamesById: getGamesById,
+  createGame: createGame,
+  updateGame: updateGame,
+  deleteGame: deleteGame,
 };

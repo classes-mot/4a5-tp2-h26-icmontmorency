@@ -1,22 +1,23 @@
 import express from 'express';
 import { check } from 'express-validator';
 import gameController from '../controllers/gameController.js';
+import checkAuth from "../authentification/checkAuth.js"
 
 const router = express.Router();
 
 // Middleware pour obtenir toutes les tâches
-router.get('/', gameController.getTasks);
+router.get('/', gameController.getGames);
 
-router.get('/:tid', gameController.getTasksById);
+router.get('/:tid', gameController.getGamesById);
 
 //router.use(checkAuth);
 
 router.post(
-  '/', gameController.createTask
+  '/add', gameController.createGame
 );
 
-router.patch('/:tid', gameController.updateTask);
+router.patch('/update/:tid', gameController.updateGame);
 
-router.delete('/:tid', gameController.deleteTask);
+router.delete('/delete/:tid', gameController.deleteGame);
 
 export default router;
