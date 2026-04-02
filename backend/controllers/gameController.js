@@ -87,7 +87,7 @@ const deleteGame = async (req, res, next) => {
   const gameId = req.params.tid;
   
   try {
-    const game = Game.findByIdAndDelete(gameId);
+    const game = await Game.findByIdAndDelete(gameId);
 
     if (!game) {
       return res.status(404).json({message: ":(((((( delete"})
@@ -97,6 +97,8 @@ const deleteGame = async (req, res, next) => {
       error.code = 404; // Spécifie le code de statut HTTP pour l'erreur
       return next(error); // Déclenche une erreur personnalisée
   }
+
+  res.json({message:"Game deleted"})
 
 };
 

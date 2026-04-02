@@ -10,7 +10,7 @@ router.get('/', gameController.getGames);
 
 router.get('/:tid', gameController.getGamesById);
 
-//router.use(checkAuth);
+router.use(checkAuth);
 
 router.post(
   '/add', gameController.createGame
